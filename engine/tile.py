@@ -6,5 +6,14 @@ class Tile(pyglet.sprite.Sprite):
 	def __init__(self, *args, **kwargs):
 		super(Tile,self).__init__(*args, **kwargs)
 		
-		self.tile_width = 32
-		self.tile_height = 32
+class orangeTile(Tile):
+	def __init__(self, *args, **kwargs):
+		super(orangeTile,self).__init__(
+		img=resources.tile_one, *args, **kwargs)
+		
+class blueTile(Tile):
+	def __init__(self, *args, **kwargs):
+		super(blueTile,self).__init__(
+		img=resources.tile_two, *args, **kwargs)
+
+#tileList = [resources.tile_one,resources.tile_two]
