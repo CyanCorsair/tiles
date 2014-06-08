@@ -5,7 +5,7 @@ from random import choice
 from engine import tile, resources, map, util
 
 windowDebug = False
-scrollSpeed = 3
+scrollSpeed = 10
 
 windowHeight = 768
 windowWidth = 1024
@@ -37,19 +37,17 @@ class mainWindow(pyglet.window.Window):
 		if windowDebug: print self.mouseX, self.mouseY
 		
 		if self.mouseX in range(0, 10):
-			if windowDebug: print "Left."
 			for i in self.map.tileMap:
 				i.x += scrollSpeed
-		if self.mouseX in range((self.windowWidth - 10), self.windowWidth):
-			if windowDebug: print "Right."
+		if self.mouseX in range((self.windowWidth - 10), 
+										self.windowWidth):
 			for i in self.map.tileMap:
 				i.x -= scrollSpeed
 		if self.mouseY in range(0, 10):
-			if windowDebug: print "Bottom."
 			for i in self.map.tileMap:
 				i.y += scrollSpeed
-		if self.mouseY in range((self.windowHeight - 10), self.windowHeight):
-			if windowDebug: print "Top."
+		if self.mouseY in range((self.windowHeight - 10), 
+										self.windowHeight):
 			for i in self.map.tileMap:
 				i.y -= scrollSpeed
 	
@@ -59,7 +57,8 @@ class mainWindow(pyglet.window.Window):
 			print x, y
 	
 	def update(self, dt):
-		self.on_mouse_motion(self.mouseX, self.mouseY, self.mouseDX, self.mouseDY)
+		self.on_mouse_motion(self.mouseX, self.mouseY, 
+							self.mouseDX, self.mouseDY)
 		
 	def on_draw(self):
 		self.clear()
