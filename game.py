@@ -2,7 +2,10 @@
 
 import pyglet, math, random
 from random import choice
-from engine import tile, resources, map
+from engine import tile, resources, map, util
+
+windowDebug = False
+scrollSpeed = 3
 
 windowHeight = 768
 windowWidth = 1024
@@ -19,16 +22,52 @@ class mainWindow(pyglet.window.Window):
 		self.label = pyglet.text.Label('Main Window')
 		self.map = map.Map(self)
 		self.map.drawMap()
+		
+		self.mouseX = None
+		self.mouseY = None
+		self.mouseDX = None
+		self.mouseDY = None
 	
-	#def update(self, dt):
-	#	pass
+	def on_mouse_motion(self, x, y, dx, dy):
+		self.mouseX = x
+		self.mouseY = y
+		self.mouseDX = dx
+		self.mouseDY = dy
+		
+		if windowDebug: print self.mouseX, self.mouseY
+		
+		if self.mouseX in range(0, 10):
+			if windowDebug: print "Left."
+			for i in self.map.tileMap:
+				i.x += scrollSpeed
+		if self.mouseX in range((self.windowWidth - 10), self.windowWidth):
+			if windowDebug: print "Right."
+			for i in self.map.tileMap:
+				i.x -= scrollSpeed
+		if self.mouseY in range(0, 10):
+			if windowDebug: print "Bottom."
+			for i in self.map.tileMap:
+				i.y += scrollSpeed
+		if self.mouseY in range((self.windowHeight - 10), self.windowHeight):
+			if windowDebug: print "Top."
+			for i in self.map.tileMap:
+				i.y -= scrollSpeed
 	
+	def on_mouse_press(self, x, y, button, modifiers):
+		
+		if button == pyglet.window.mouse.LEFT:
+			print x, y
+	
+	def update(self, dt):
+		self.on_mouse_motion(self.mouseX, self.mouseY, self.mouseDX, self.mouseDY)
+		
 	def on_draw(self):
 		self.clear()
 		self.label.draw()
 		self.map.map_batch.draw()
-		
+	
 if __name__ == '__main__':
 	window = mainWindow()
-	#pyglet.clock.schedule_interval(battleWindow.update, 1/120.0)
+	#window.set_exclusive_mouse(True)
+	pyglet.clock.schedule_interval(window.update, 1/120.0)
 	pyglet.app.run()

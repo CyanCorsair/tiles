@@ -6,7 +6,7 @@ import numpy, pyglet, math
 from random import choice, randint
 import tile, resources
 
-debug = False
+mapDebug = False
 
 class Map(object):
 	def __init__(self, game):
@@ -26,6 +26,8 @@ class Map(object):
 		self.isoX = None
 		self.cartY = None
 		self.cartX = None
+		self.locX = None
+		self.locY = None
 		
 		self.createArray()
 		
@@ -35,7 +37,7 @@ class Map(object):
 			for y in range(self.mapHeight):
 				self.tiles[y,x] = randint(0,1)
 		
-		if debug: print "Tiles: \n", self.tiles
+		if mapDebug: print "Tiles: \n", self.tiles
 	
 	def isoToCart(self, x, y):
 		self.cartX = (2 * y + x) / 2
@@ -46,6 +48,13 @@ class Map(object):
 		self.isoX = x - y
 		self.isoY = (x + y) / 2
 		return self.isoX, self.isoY
+	
+	def getTileCords(self, x, y):
+		self.isoX = x
+		self.isoY = Y
+		self.locX = Math.floor(self.isoX / self.tileHeight)
+		self.locY = Math.floor(self.isoY / self.tileHeight)
+		return self.locX, self.locY
 	
 	def drawMap(self):
 		for i in range(self.mapWidth):
