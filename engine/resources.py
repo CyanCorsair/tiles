@@ -1,8 +1,9 @@
 ﻿#Resource handler
 import pyglet
+from pyglet.gl import *
 
 pyglet.resource.path = ['resources']
 pyglet.resource.reindex()
 
-tile_one = pyglet.resource.image("tile_test.jpg")
-tile_two = pyglet.resource.image("tile_test_2.jpg")
+tile_one = pyglet.resource.image("tile_test_1.png")
+tile_two = pyglet.resource.image("tile_test_2.png")

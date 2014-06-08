@@ -16,9 +16,16 @@ class Map(object):
 		self.game = game
 		self.map_batch = pyglet.graphics.Batch()
 		
-		self.mapWidth = game.windowWidth / 32
-		self.mapHeight = game.windowHeight / 32
+		self.tileWidth = 32
+		self.tileHeight = 32
+		self.mapWidth = game.windowWidth / self.tileWidth
+		self.mapHeight = game.windowHeight / self.tileHeight
 		self.tileMap = []
+		
+		self.isoY = None
+		self.isoX = None
+		self.cartY = None
+		self.cartX = None
 		
 		self.createArray()
 		
@@ -29,19 +36,27 @@ class Map(object):
 				self.tiles[y,x] = randint(0,1)
 		
 		if debug: print "Tiles: \n", self.tiles
-		
+	
+	def isoToCart(self, x, y):
+		self.cartX = (2 * y + x) / 2
+		self.cartY = (2 * y - x) / 2
+		return self.cartX, self.cartY
+	
+	def cartToIso(self, x, y):
+		self.isoX = x - y
+		self.isoY = (x + y) / 2
+		return self.isoX, self.isoY
+	
 	def drawMap(self):
-		for a in range(self.mapWidth):
+		for i in range(self.mapWidth):
 			for j in range(self.mapHeight):
-				self.plotid = self.tiles[j,a]
-				#self.choice = tile.tileList[self.plotid]
-				self.x = a * 32
-				self.y = j * 32
+				self.plotid = self.tiles[j,i]
+				self.x = i * self.tileHeight
+				self.y = j * self.tileWidth
+				self.cartToIso(self.x, self.y)
 				if self.plotid == 0:
-					self.tileMap.append(tile.orangeTile(x=self.x, y=self.y, batch=self.map_batch))
+					self.tileMap.append(tile.orangeTile(x=self.isoX, y=self.isoY, batch=self.map_batch))
 				elif self.plotid == 1:
-					self.tileMap.append(tile.blueTile(x=self.x, y=self.y, batch=self.map_batch))
+					self.tileMap.append(tile.blueTile(x=self.isoX, y=self.isoY, batch=self.map_batch))
 				else:
 					print "Error"
-				#self.tileMap.append(tile.Tile(self.choice, self.x, self.y, batch=self.map_batch))
-		#print self.tileMap

@@ -15,5 +15,3 @@ class blueTile(Tile):
 	def __init__(self, *args, **kwargs):
 		super(blueTile,self).__init__(
 		img=resources.tile_two, *args, **kwargs)
-
-#tileList = [resources.tile_one,resources.tile_two]
